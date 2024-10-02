@@ -10,7 +10,13 @@ class EventController extends Controller
     // Get all events
     public function index()
     {
-        return response()->json(Event::all());
+        $events = Event::all();
+
+        if ($events->isEmpty()) {
+            return response()->json(['message' => 'No event exists.'], 404); //instead having 200 as response status
+        } else {
+            return response()->json($events);
+        }
     }
 
     // Create a new event
@@ -23,7 +29,13 @@ class EventController extends Controller
     // Get a specific event by ID
     public function show($id)
     {
-        return response()->json(Event::find($id));
+        $event = Event::find($id);
+
+        if ($event) {
+            return response()->json($event);
+        } else {
+            return response()->json(['message' => 'Event not found'], 404); //instead having 200 as response status here as well
+        }
     }
 
     // Update an existing event
@@ -37,7 +49,13 @@ class EventController extends Controller
     // Delete an event
     public function destroy($id)
     {
+        $event = Event::find($id);
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
         Event::destroy($id);
-        return response()->json(null, 204);
+
+        return response()->json(['message' => 'Event deleted successfully'], 200);
     }
 }
