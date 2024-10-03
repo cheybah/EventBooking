@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ClientAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +34,6 @@ Route::get('events/{eventId}/bookings', [BookingController::class, 'index']);
 Route::post('bookings', [BookingController::class, 'store']);
 Route::delete('bookings/{id}', [BookingController::class, 'destroy']);
 
+// Auth routes (I used Laravel Sanctum)
+Route::post('client/register', [ClientAuthController::class, 'register']);
+Route::post('login', [LoginController::class, 'login']);
