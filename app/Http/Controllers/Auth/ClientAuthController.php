@@ -15,7 +15,7 @@ class ClientAuthController extends Controller
     public function register(Request $request)
     {
         try {
-            Log::info($request->all());
+            Log::info('Register request received', $request->all());
 
             // Validate the incoming request
             $validateUser = Validator::make($request->all(),

@@ -37,7 +37,6 @@ class LoginController extends Controller
                 ], 401);
             }
 
-            // Assuming you're using tokens (e.g., with Sanctum)
             $user = User::where('email', $request->email)->firstOrFail();
 
             return response()->json([
