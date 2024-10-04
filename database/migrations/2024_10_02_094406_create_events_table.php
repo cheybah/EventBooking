@@ -15,11 +15,19 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('category');
             $table->date('event_date');
-            $table->string('location');
             $table->integer('available_seats');
+            $table->string('img');
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            if (Schema::hasColumn('users', 'role')) {
+                $table->dropColumn('role');
+            }
+        });
+
     }
 
     /**
