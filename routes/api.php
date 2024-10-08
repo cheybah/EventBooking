@@ -49,3 +49,5 @@ Route::post('client/register', [ClientAuthController::class, 'register']);
 Route::post('login', [LoginController::class, 'login']);
 Route::get('user/{id}', [UserController::class, 'show']);
 Route::get('users', [UserController::class, 'index']);
+Route::post('admin/register', [ClientAuthController::class, 'registerAdmin']);
+

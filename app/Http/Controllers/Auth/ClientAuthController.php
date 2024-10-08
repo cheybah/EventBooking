@@ -55,5 +55,50 @@ class ClientAuthController extends Controller
             return response()->json(['message' => 'User registration failed'], 500);
         }
     }
+    // Register a new admin
+    public function registerAdmin(Request $request)
+    {
+        try {
+            Log::info('Admin register request received', $request->all());
+
+            // Validate the incoming request
+            $validateUser = Validator::make($request->all(),
+                [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users', // Unique to prevent duplicate email
+                'password' => 'required',
+            ]);
+
+            if($validateUser->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
+            }
+
+            // Create a new admin (role ADMIN)
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'ADMIN', // Assign ADMIN role
+            ]);
+
+            Log::info('Admin user created: ', $user->toArray());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Admin user created successfully',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 201);
+
+        } catch (\Exception $e) {
+
+            Log::error('Admin registration error: ' . $e->getMessage());
+            return response()->json(['message' => 'Admin registration failed'], 500);
+        }
+    }
 }
+
 
