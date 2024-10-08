@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -17,6 +18,11 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $booking = Booking::create($request->all());
+        // Update booked seats in the event
+        $event = Event::find($request->event_id);
+        $event->booked_seats += $request->seats_reserve;
+        $event->save();
+
         return response()->json($booking, 201);
     }
 
