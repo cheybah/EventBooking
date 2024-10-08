@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('category');
             $table->date('event_date');
             $table->integer('available_seats');
+            $table->integer('booked_seats')->default(0); //added for future form control
             $table->string('img');
             $table->timestamps();
         });

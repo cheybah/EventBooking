@@ -10,7 +10,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'category' ,'event_date', 'available_seats' , 'img'
+        'name', 'description', 'category' ,'event_date', 'available_seats' ,'booked_seats', 'img'
     ]; //To prevent mass assignment exception. Define user input.
 
     // Define the relationship: an event has many bookings

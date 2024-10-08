@@ -43,6 +43,7 @@ class LoginController extends Controller
                 'status' => true,
                 'message' => 'Login successful',
                 'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'user' => $user, // Include the user data in the response
                 'role' => $user->role, // Pass the role to frontend
             ], 200);
 
